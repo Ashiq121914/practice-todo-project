@@ -24,11 +24,11 @@ exports.CreateProfile = async (req, res) => {
 exports.UserLogin = async (req, res) => {
   try {
     const reqBody = req.body;
-    let UserName = reqBody["UserName"];
+    let UserName = reqBody["Username"];
     let Password = req.body["Password"];
 
     const data = await ProfileModel.find({
-      UserName: UserName,
+      Username: UserName,
       Password: Password,
     });
 
@@ -62,7 +62,7 @@ exports.UserLogin = async (req, res) => {
 exports.SelectProfile = async (req, res) => {
   try {
     const UserName = req.headers["username"];
-    const data = await profileModel.find({ UserName: UserName });
+    const data = await profileModel.find({ Username: UserName });
 
     res.status(200).json({
       status: "success",
@@ -72,6 +72,36 @@ exports.SelectProfile = async (req, res) => {
     res.status(400).json({
       status: "fail",
       error: error.message || "An error occurred while reading the data",
+    });
+  }
+};
+
+//update profile
+exports.UpdateProfile = async (req, res) => {
+  try {
+    const Username = req.headers["username"]; // Retrieving the username from the header
+    // console.log(Username);
+    const query = { Username: Username }; // Defining the query for finding the user
+    const updateData = req.body; // Data to update
+
+    // Corrected updateOne syntax
+    const data = await profileModel.updateOne(query, updateData);
+
+    if (data.matchedCount === 0) {
+      return res.status(404).json({
+        status: "fail",
+        message: "No user found with this username",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message || "An error occurred while updating the data",
     });
   }
 };
