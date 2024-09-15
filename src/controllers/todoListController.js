@@ -102,3 +102,26 @@ exports.DeleteTodo = async (req, res) => {
     });
   }
 };
+
+// select todo by status
+exports.SelectTodoByStatus = async (req, res) => {
+  try {
+    let Username = req.headers["username"];
+    let TodoStatus = req.body["TodoStatus"];
+
+    const data = await TodoModel.find({
+      Username: Username,
+      TodoStatus: TodoStatus,
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message || "An error occurred while finding the data",
+    });
+  }
+};

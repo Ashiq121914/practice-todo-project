@@ -4,7 +4,7 @@ const DataSchema = mongoose.Schema(
     Username: { type: String },
     TodoSubject: { type: String },
     TodoDescription: { type: String },
-    TodoStatus: { type: String, default: "New" },
+    TodoStatus: { type: String, default: "progress" },
   },
   { versionKey: false, timestamps: true }
 );
