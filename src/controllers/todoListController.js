@@ -79,3 +79,26 @@ exports.UpdateTodo = async (req, res) => {
     });
   }
 };
+
+// delete todo
+exports.DeleteTodo = async (req, res) => {
+  try {
+    let _id = req.body["_id"];
+
+    let PostBody = {
+      _id: _id,
+    };
+
+    const data = await TodoModel.deleteOne({ _id: _id });
+
+    res.status(200).json({
+      status: "success",
+      data: data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message || "An error occurred while deleting the data",
+    });
+  }
+};

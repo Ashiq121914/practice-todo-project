@@ -14,5 +14,6 @@ router.post("/updateProfile", authVerify, profileController.UpdateProfile);
 router.post("/createTodo", authVerify, todoController.CreateTodo);
 router.get("/selectTodo", authVerify, todoController.SelectTodo);
 router.post("/updateTodo", authVerify, todoController.UpdateTodo);
+router.delete("/removeTodo", authVerify, todoController.DeleteTodo);
 
 module.exports = router;
