@@ -20,5 +20,6 @@ router.post(
   authVerify,
   todoController.SelectTodoByStatus
 );
+router.post("/selectTodoByDate", authVerify, todoController.SelectTodoByDate);
 
 module.exports = router;

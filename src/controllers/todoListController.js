@@ -125,3 +125,27 @@ exports.SelectTodoByStatus = async (req, res) => {
     });
   }
 };
+
+// select todo by date
+exports.SelectTodoByDate = async (req, res) => {
+  try {
+    let Username = req.headers["username"];
+    let FromDate = req.body["FromDate"]; // Fixed typo here
+    let ToDate = req.body["ToDate"];
+
+    const data = await TodoModel.find({
+      Username: Username,
+      createdAt: { $gte: new Date(FromDate), $lte: new Date(ToDate) },
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message || "An error occurred while finding the data",
+    });
+  }
+};
